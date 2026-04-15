@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: appdb
+  springboot:
+    image: openjdk:17-oracle
+    command: tail -f /dev/null
+    environment:
+      - SPRING_DATASOURCE_URL=URl
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=pass

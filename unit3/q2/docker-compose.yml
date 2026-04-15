@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: secret
+  backend:
+    image: node:18-alpine
+    command: tail -f /dev/null
+    depends_on:
+      - database

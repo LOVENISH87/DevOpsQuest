@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  analytics:
+    image: python:3.9-slim
+    command: python -c "x = 'a' * 10**8; import time; time.sleep(3600)"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 200M

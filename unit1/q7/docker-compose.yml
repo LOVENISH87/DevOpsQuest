@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    networks:
+      - app_network
+  backend:
+    image: node:18-slim
+    command: sh -c "echo 'Backend running' && tail -f /dev/null"
+    networks:
+      - app_network
+networks:
+  app_network:
+    driver: bridge

@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  frontend:
+    image: nginx:alpine
+    networks:
+      - micro-net
+  backend:
+    image: alpine
+    command: tail -f /dev/null
+    networks:
+      - micro-net
+networks:
+  micro-net:
+    driver: bridge

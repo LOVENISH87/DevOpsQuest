@@ -1,0 +1,19 @@
+# Docker
+*.dockerignore
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Secrets
+.env
+db_password.txt
+credentials.json

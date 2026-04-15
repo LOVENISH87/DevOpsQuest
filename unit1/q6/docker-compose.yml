@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  webapp:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - app_data:/usr/share/nginx/html
+volumes:
+  app_data:

@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  backend:
+    image: node:18-alpine
+    environment:
+      - DB_HOST=mongodb
+      - DB_URL=URl
+    command: tail -f /dev/null
+  mongodb:
+    image: mongo:latest

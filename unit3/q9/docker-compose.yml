@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  gateway:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+  userservice:
+    image: node:18-alpine
+    command: tail -f /dev/null
+  orderservice:
+    image: node:18-alpine
+    command: tail -f /dev/null
