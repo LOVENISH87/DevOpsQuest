@@ -1,0 +1,36 @@
+# version: "3.8"
+services:
+  backend:
+    image : node:22-alpine
+    ports :
+      - "3000:3000"
+    depends_on:
+      - database
+
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command : node server.js
+    networks:
+       batman:
+        ipv4_address : "10.0.0.2"
+    
+  database:
+    image : mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ROOT
+      MONGO_INITDB_ROOT_PASSWORD: batman
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      batman:
+        ipv4_address : "10.0.0.3"
+      
+
+
+networks:
+  batman:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.0.0.0/24"

@@ -1,8 +1,16 @@
 version: '3.8'
+
+# Custom Built Container communicating with standard off-the-shelf Container
 services:
-  nodeapp:
-    build: .
+  node_api:
+    # Instead of an image pull, we tell compose to trigger a build context
+    build: 
+      context: ./src
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-  mongodb:
+    environment:
+      MONGO_URI: URl
+      
+  mongo_db:
     image: mongo:latest

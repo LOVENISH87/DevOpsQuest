@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name : 'BRANCH', defaultValue : 'main', description : 'GIT BRANCH')
+        string(name : 'APP_VERSION', defaultValue : '1.0', description : 'app version')
+    }
+
+    environment {
+        BUILD_DIR = 'target'
+        ARTIFACT_NAME = 'myapp'
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: "${ params.BRANCH }",
+                url : 'https://github.com/LOVENISH87/LogiTrack'
+            }
+        }
+        stage('build') {
+            steps {
+                echo "building ${params.APP_VERSION}"
+                sh 'mkdir -p build'
+            }
+        }
+        stage('unit testing') {
+            steps {
+                echo 'running tests'
+            }
+        }
+        stage('code Quality Check') {
+            steps {
+                echo 'running code quality check'
+            }
+        }
+        stage('Artifacts packages') {
+            steps {
+                sh 'tar -cvf build/bat.tar .'
+                echo "artifact created ${ARTIFACT_NAME}"
+            }
+        }
+    }
+}

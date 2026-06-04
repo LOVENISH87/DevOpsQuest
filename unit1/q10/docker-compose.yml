@@ -1,0 +1,11 @@
+version: '3.8'
+
+# Rapid static event website deployment using Nginx
+services:
+  event_site:
+    image: nginx:alpine
+    container_name: event_web
+    ports:
+      - "80:80"
+    volumes:
+      - ./static:/usr/share/nginx/html:ro  # Read-only bind mount for security

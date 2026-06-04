@@ -1,16 +1,23 @@
 version: '3.8'
+
+# Demonstrates internal DNS resolution between containers via a custom bridge network
 services:
   frontend:
     image: nginx:alpine
+    container_name: app_frontend
     ports:
       - "8080:80"
     networks:
-      - app_network
-  backend:
-    image: node:18-slim
-    command: sh -c "echo 'Backend running' && tail -f /dev/null"
+      - backend_bridge
+
+  backend_api:
+    image: node:18-alpine
+    container_name: app_backend
+    # Simple dummy process
+    command: sh -c "echo 'Backend API is ready' && tail -f /dev/null"
     networks:
-      - app_network
+      - backend_bridge
+
 networks:
-  app_network:
+  backend_bridge:
     driver: bridge

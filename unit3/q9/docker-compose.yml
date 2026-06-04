@@ -1,14 +1,19 @@
 version: '3.8'
+
+# Complete API Gateway architectural pattern
 services:
-  gateway:
+  api_gateway:
     image: nginx:alpine
     ports:
       - "80:80"
+    # Overwrite the default config with our reverse proxy routing table
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-  userservice:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+
+  user_microservice:
     image: node:18-alpine
-    command: tail -f /dev/null
-  orderservice:
+    command: sh -c "echo 'User service response' > /var/tmp/index.html && tail -f /dev/null"
+
+  order_microservice:
     image: node:18-alpine
-    command: tail -f /dev/null
+    command: sh -c "echo 'Order service response' > /var/tmp/index.html && tail -f /dev/null"

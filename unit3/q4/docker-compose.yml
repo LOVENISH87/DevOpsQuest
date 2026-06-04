@@ -1,10 +1,16 @@
 version: '3.8'
+
+# Properly protecting Database Passwords using Docker Secrets securely
 services:
-  app:
-    image: alpine
-    command: tail -f /dev/null
+  database:
+    image: mysql:8.0
+    environment:
+      # Instruct MySQL to look at the secret file natively
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/database_root_password
     secrets:
-      - db_password
+      - database_root_password
+
 secrets:
-  db_password:
-    file: ./db_password.txt
+  database_root_password:
+    # Resolves to a physical file residing safely on the host
+    file: ./secrets/db_password.txt

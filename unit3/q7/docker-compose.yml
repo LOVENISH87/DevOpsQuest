@@ -1,14 +1,21 @@
 version: '3.8'
+
+# Spring Boot Architecture with Postgres linking natively
 services:
-  postgres:
+  postgres_server:
     image: postgres:15
     environment:
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: springbootpass
       POSTGRES_DB: appdb
-  springboot:
+      POSTGRES_USER: springboot
+      
+  springboot_engine:
     image: openjdk:17-oracle
     command: tail -f /dev/null
     environment:
+      # Native JDBC connection string matching PostgreSQL service alias
       - SPRING_DATASOURCE_URL=URl
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=pass
+      - SPRING_DATASOURCE_USERNAME=springboot
+      - SPRING_DATASOURCE_PASSWORD=springbootpass
+    depends_on:
+      - postgres_server

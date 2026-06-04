@@ -1,10 +1,17 @@
 version: '3.8'
+
+# This compose file restricts the resources assigned to the analytics container
 services:
-  analytics:
+  analytics_worker:
     image: python:3.9-slim
-    command: python -c "x = 'a' * 10**8; import time; time.sleep(3600)"
+    container_name: restricted_analytics
+    # A script to mimic high memory utilization
+    command: python -c "x = 'a' * (10**8); import time; time.sleep(3600)"
     deploy:
       resources:
         limits:
-          cpus: '0.5'
-          memory: 200M
+          cpus: '0.50'     # Restrict to 50% of a single CPU core
+          memory: 200M     # Restrict maximum memory usage to 200 Megabytes
+        reservations:
+          cpus: '0.10'     # Guarantee at least 10% CPU
+          memory: 50M      # Guarantee at least 50MB RAM

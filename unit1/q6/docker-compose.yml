@@ -1,10 +1,16 @@
 version: '3.8'
+
+# Demonstrates persistent storage using Docker volumes
 services:
-  webapp:
+  web_server:
     image: nginx:alpine
+    container_name: persistent_nginx
     ports:
-      - "80:80"
+      - "8080:80"
+    # Mount the named volume to the Nginx HTML directory
     volumes:
-      - app_data:/usr/share/nginx/html
+      - website_data:/usr/share/nginx/html
+
 volumes:
-  app_data:
+  # Defines a managed volume that persists even if the container is deleted
+  website_data:

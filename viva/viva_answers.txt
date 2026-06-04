@@ -1,0 +1,165 @@
+# Viva Revision Questions & Answers
+
+## Topic 1: Basics of DevOps Infrastructure
+
+### End-of-topic revision questions
+- What is a container?
+A container is a lightweight, isolated environment used to package and run an application predictably along with all its dependencies.
+
+- What is the difference between image and container?
+An image is a read-only blueprint (packaged code and dependencies), while a container is a running, isolated execution instance of that image.
+
+- Why are containers useful in DevOps?
+They provide consistent environments, eliminating "works on my machine" issues. They also start faster than VMs, simplify CI/CD pipelines, and scale easily.
+
+- What is a runtime?
+A container runtime manages the lifecycle of a container, handling startup, shutdown, and interaction with the host OS.
+
+- Why does process isolation matter?
+It ensures applications do not interfere with each other, minimizing security risks and preventing conflict over resources.
+
+### More revision questions
+- What do namespaces do?
+They isolate system resources (like Process IDs, network interfaces, and user IDs), giving the process a localized "view" of the OS.
+
+- What do cgroups control?
+Control Groups strictly limit resource usage such as CPU, memory, and Disk I/O to prevent a single container from dominating system resources.
+
+- Why are image layers useful?
+Layers can be cached and reused across images, making building images much faster and reducing bandwidth and storage footprint.
+
+- What is a registry?
+A centralized storage hub (like Docker Hub) where images are pushed, pulled, stored, and shared securely.
+
+- What is the role of Docker daemon?
+The daemon (the background engine) performs the heavy lifting: building, running, and managing containers, networks, and volumes based on CLI instructions.
+
+### Even more revision questions
+- What is the role of Docker CLI?
+It's the command-line interface that developers interact with (e.g., `docker run`), passing instructions directly to the daemon.
+
+- What are Docker object types?
+The main primitives are Containers, Images, Networks, and Volumes.
+
+- Why are containers lighter than VMs?
+Containers share the host machine's kernel directly and don't require the overhead of simulating hardware and running an entire guest OS.
+
+- What is image distribution?
+It is the process of moving packaged container images between environments, typically pushing to and pulling from registries.
+
+- Why is filesystem layering important?
+It uses copy-on-write functionality so multiple running containers can share the same read-only base layers securely, saving immense disk space.
+
+### Advanced thinking questions
+- Why did DevOps benefit so much from containers?
+They brought intense standardization. The same artifact built by a developer behaves exactly the same in production ops, standardizing deployment logic.
+
+- Why is OS-level isolation lighter than full VM isolation?
+It uses existing kernel features (namespaces and cgroups) natively instead of utilizing hypervisors to handle independent kernel translations.
+
+- Why are layers useful for CI/CD?
+They skip repetitive operations. If an app's dependencies haven't changed, CI uses the cached installed layer, vastly accelerating pipelines.
+
+- What may happen without cgroups?
+A container with memory leaks or high CPU needs could drain the host completely, triggering crashes or denying service to other apps.
+
+- Why are registries central in modern deployment?
+They maintain immutable version histories, enabling servers anywhere globally to pull the exact same environment seamlessly.
+
+---
+
+## Topic 2: Image Building & Container Management
+
+### End-of-topic revision questions
+- What is build context?
+The set of files in the folder where `docker build` runs, which are transferred to the daemon for the build context. 
+
+- Why is `.dockerignore` useful?
+It prevents irrelevant or sensitive files (like `node_modules` or `.env` files) from entering the build context, securing builds and speeding them up.
+
+- What is the difference between CMD and ENTRYPOINT?
+`ENTRYPOINT` assigns an unchangeable executable that always handles the container startup, whereas `CMD` provides default launch arguments that users can override natively from the CLI.
+
+### More revision questions
+- What is the difference between volume and bind mount?
+A volume is a Docker-managed storage space inside its own secure path, perfect for databases. A bind mount directly exposes an exact folder from your host into the container, ideal for live code tweaking.
+
+- What does EXPOSE do?
+It serves as metadata showing which ports the containerized app internally uses. It does not actually publish them to the host network.
+
+- What does port mapping mean?
+Configuring Docker to route traffic coming to a port on your physical host machine down into a specific port inside the isolated container.
+
+- Why is Docker Hub useful?
+It gives access to a massive library of official, verified base technologies (Node, MySQL) freeing you from having to compile common stacks from scratch.
+
+- Why are access tokens preferred over passwords?
+Access tokens have limited scope, are easier to revoke, and prevent giving CI systems the raw credentials that control an entire account.
+
+### Advanced thinking questions
+- Why should big dependency installs appear early in Dockerfile?
+They leverage caching. Installing slow dependencies early ensures they are locked into an earlier layer; you only rebuild the rapid upper layers (like source code changes).
+
+- Why can a bad build context be dangerous?
+If the directory has huge random files, they get zipped to the daemon, lagging the system. If it has private keys, they could be embedded in image history forever.
+
+- Why are networks preferred over legacy linking?
+User-defined networks grant dynamic DNS resolution (container name routing) without needing manual links, easing microservice connectivity and scaling.
+
+- What happens if database data stays only in container layer?
+The data merges directly into the container's ephemeral write layer. When the container deletes or updates, all data permanently disappears.
+
+- Why is version tagging important in deployment?
+Using tags guarantees you pull specific, tested software versions. Using "latest" means the image could update underneath you and break running applications.
+
+---
+
+## Topic 3: Microservices with Docker Compose
+
+### End-of-topic questions for revision
+- What is the main difference between monolithic and microservices?
+A monolith links all functions into one massive application. Microservices split domains into distinct, self-contained apps connecting through network requests.
+
+- Why do we use Docker Compose?
+It orchestrates multi-container applications (like an API and its DB) cleanly using a declarative YAML file rather than juggling a dozen fragmented CLI commands.
+
+- What is the role of `services` in YAML?
+It acts as the primary category defining each isolated subsystem that makes up the entire cluster operations.
+
+- What is the difference between `build` and `image`?
+`image` tells Compose to pull pre-compiled images from a registry. `build` tells Compose to read a local Dockerfile and build it fresh.
+
+- Why are volumes important for databases?
+Databases require data that securely outlives container restarts or deployments.
+
+### More revision questions
+- Why are networks needed in Compose?
+They bridge the isolated containers. Compose automatically assigns a network so applications can discover each other without knowing chaotic static IP addresses.
+
+- Why do we use environment variables?
+To keep settings dynamic across staging vs prod, avoid hardcoding database passwords into repositories, and inject critical runtime information.
+
+- What does `depends_on` do?
+It sequences the topological startup order. Your backend waits for the database container to initialize first before starting itself.
+
+- How does backend reach database in Compose?
+It connects by passing the database service's literal yaml name (e.g. `db`) as the connection URL. Compose’s internal DNS handles the underlying IP resolution dynamically.
+
+- Why is Compose useful for WordPress, Node.js, and Spring Boot examples?
+These environments natively depend on independent supporting containers (like relational SQL databases or document stores) making multi-service topologies mandatory.
+
+### Advanced thinking questions
+- When is microservices better than monolithic?
+When an app requires massive differential scaling, when separate teams need isolated delivery velocities, or when different components require separate technological solutions.
+
+- Can microservices become too complex?
+Yes; network delay spikes, cross-service debugging is painful, handling distributed database failures demands complex logic, and CI/CD maintenance multiplies.
+
+- Why is API Gateway useful in large systems?
+It presents one unified URL to the customer, hiding backend complexities, and centralizing security, SSL, load balancing, and rate-limiting.
+
+- Why is startup order not same as service readiness?
+Just because a database container starts does not mean its TCP database server has finished initializing tables. Apps must still retry connections on launch.
+
+- What happens if database has no persistent volume?
+Since database records are kept strictly inside the container instance, shutting off the container irrevocably flushes all user entries and states.

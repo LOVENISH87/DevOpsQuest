@@ -1,0 +1,92 @@
+INT332:DEVOPS VIRTUALIZATION AND CONFIGURATION MANAGEMENT
+Course Outcomes:
+CO1 :: Explain DevOps infrastructure concepts including containerization, runtimes, process
+isolation, namespaces, and resource management mechanisms.
+CO2 :: Apply Docker concepts to build, manage, and distribute container images using
+networking, storage, and registries.
+CO3 :: Construct microservices applications using Docker Compose with multi-container services
+and dependency configuration.
+Unit I
+Basics of DevOps Infrastructure : Introduction to containers (Origin of containers, Emergence of
+Modern Containerization and Integration into DevOps), Container runtime, Process isolation &
+namespaces, Control Groups (cgroups) for resource limits, Container images & layers, Image
+registries & distribution, Introduction to Docker, Docker Architecture, Docker daemon, Docker CLI,
+Docker registry & Hub, Object types: container, image, network, volume, Docker layering &
+filesystem
+Unit II
+Image Building & Container Management : Docker file Core Concepts: Image layering, Build
+context & .dockerignore, Dockerfile writing, Basic instructions ( FROM, RUN, COPY, ADD, CMD,
+ENTRYPOINT, WORKDIR, ENV, EXPOSE, VOLUME etc),, Image Creation in Detail: docker build
+process, Images Tagging /versioning, Inspecting images (history, layers), Docker Networking: Bridge
+network, Host & overlay networks, DNS inside Docker, Linking containers, Port mapping between host
+and container, Docker Storage: Volumes vs bind mounts, backing data on host, , Copy-on-write
+mechanism, Registries: Docker Hub, GitHub Container Registry (GHCR),, Private registries,
+Authentication & access tokens.
+Unit III
+Microservices with Docker Compose : Microservices Architecture: Need for microservices,
+Monolithic vs microservices, Advantages: scalability, isolation, agility, API Gateway., Docker
+Compose: YAML Structure, Writing docker-compose.yml, version, services, volumes, networks,,
+Environment variables, Secrets and configs, Build vs image fields in YAML, Service dependency
+ordering., Use Case Deployments: Multi-container apps (database + backend + frontend), WordPress
++ MySQL, Node.js + MongoDB, Java Spring Boot + PostgreSQL
+Unit IV
+Maven Build Automation : Why build tools exist, Problems solved by automated builds, Project
+Object Model (POM), Directory structure, Build lifecycle phases, validate, compile, test, package,
+verify, install, deploy, Parent POM, Dependency scope, Transitive dependencies, Version conflicts &
+resolution, Using dependency Management, Maven Plugins & Execution: Compiler plugin, Surefire
+plugin (unit testing), Shade plugin (uber jar), Maven wrapper (mvnw), Maven and Docker Integration:
+dockerfile-maven-plugin, Dockerizing Maven-based applications, Pushing artifacts to registries
+Unit V
+Continuous Integration (CI) with GitHub Actions : Understanding workflow automation, Events,
+triggers, workflow directory structure, Key components: workflows, Key components: jobs, steps,
+actions, runners, Workflow triggers: push, pull request, schedule, , manual workflow, Jobs & matrix
+strategies, Steps & shell commands, Using marketplace actions, Language-specific actions, Using
+caching for faster builds, Multi-job workflows, Deploying to servers/cloud using Actions, Runners:
+GitHub-hosted runners, Runners:Self-hosted runners ,Runner security & management, Docker &
+GitHub Actions: Building Docker images in CI, Pushing to Docker Hub, Pushing to GitHub Container
+Registry (GHCR), Deployments to servers/clouds
+Unit VI
+CO4 :: Analyze and implement automated builds using Maven through lifecycle management,
+dependency control, plugins, and Docker integration
+CO5 :: Apply Continuous Integration workflows using GitHub Actions for automated builds,
+testing, image creation, and deployment.
+CO6 :: Develop end-to-end CI/CD pipelines using Jenkins integrating source control, build tools,
+containers, and deployments.
+Through this course students should be able to
+L:2 T:0 P:2 Credits:3
+Session 2025-26 Page:1/2
+Unit VI CI/CD with Jenkins : Jenkins Foundations: Jenkins architecture (Master/Agent model), Installation
+& UI overview, Plugins management, Security, users, roles, Jenkins Pipelines: Freestyle vs Pipeline
+jobs, Declarative pipeline syntax, Scripted pipeline syntax, Jenkinsfile structure, Parameters,,
+environment variables, Jenkins multi-branch pipelines, Pipeline Stages: Checkout code from Git,
+Build, Test, Package, Post actions, Managing artifacts, Docker and Jenkins Integration: Building
+Docker images using Jenkins, Docker inside Jenkins agents, Using Docker plugins, Publishing images
+to Docker Hub/GHCR, Jenkins and GitHub integration, Backup & restore, Pipeline best practices.,
+Jenkins and Maven: Maven installation in Jenkins, Global tool configuration, Running Maven builds in
+pipelines, Code coverage & test reports, Jenkins CI/CD Deployment Flows: Triggering builds (pollSCM,
+webhook), Pipeline libraries, Jenkins agents (SSH/SFTP/Container-based), Deployments to
+servers/clouds
+Text Books:
+1. DOCKER DEEP DIVE by NIGEL POULTON, SHROFF/O'REILLY
+References:
+1. JENKINS CONTINUOUS INTEGRATION COOKBOOK by ALAN MARK BERG, O'REILLY
+2. DOCKER: UP AND RUNNING by KARL MATTHIAS, SEAN P. KANE, O'REILLY
+3. JENKINS 2 UP AND RUNNING by BRENT LASTER, O'REILLY
+List of practical.
+• Installing Docker on Windows/Linux, Concept of Hyper-V, Basic Docker commands.
+• Create a Docker-hub account, Pushing the Docker to container-hub, Saving changes to a Docker
+container.
+• Creating a Docker file
+• Types of Docker storage, Linking docker container
+• Introduction to micro services
+• Docker compose installation, Introduction to YAML files, Writing a Docker Compose file, deploying
+WordPress using docker compose.
+• Introduction to container orchestration
+• Creating a Docker swarm cluster, Initializing Docker Swarm create a service in a Docker Swarm.
+• Introduction to Docker networks, Creating a service.
+• Introduction to continuous integration.
+• Jenkins Architecture, Installing Jenkins.
+• Managing nodes on Jenkins.
+• Understanding CI / CD Pipelines, Creating CI / CD Pipelines.
+List of Practicals / Experiments:
+Session 2025-26 Page:2/2

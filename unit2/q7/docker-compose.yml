@@ -1,9 +1,13 @@
 version: '3.8'
+
+# Persistent volume allocation
 services:
-  app:
-    image: alpine
+  data_processor:
+    image: python:3.9-slim
     command: tail -f /dev/null
     volumes:
-      - appdata:/data
+      # Data written to /data inside the container persists in 'app_storage_volume'
+      - app_storage_volume:/data
+
 volumes:
-  appdata:
+  app_storage_volume:

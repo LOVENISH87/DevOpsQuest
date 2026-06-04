@@ -1,8 +1,25 @@
 version: '3.8'
+
+# This file demonstrates container isolation for two separate development teams
 services:
-  team_a_python:
+  # Team A's environment (Python)
+  team_a_env:
     image: python:3.12-slim
+    container_name: team_a_python
+    # keeps container running
     command: tail -f /dev/null
-  team_b_node:
+    networks:
+      - isolated_network
+
+  # Team B's environment (Node.js)
+  team_b_env:
     image: node:18-slim
+    container_name: team_b_node
+    # keeps container running
     command: tail -f /dev/null
+    networks:
+      - isolated_network
+
+networks:
+  isolated_network:
+    driver: bridge

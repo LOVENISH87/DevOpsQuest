@@ -1,14 +1,19 @@
 version: '3.8'
+
+# Networking structure for microservices
 services:
-  frontend:
+  web_frontend:
     image: nginx:alpine
     networks:
-      - micro-net
-  backend:
-    image: alpine
+      - microservice_net
+  
+  api_backend:
+    image: node:18-alpine
     command: tail -f /dev/null
     networks:
-      - micro-net
+      - microservice_net
+
+# Dedicated custom bridge network enables strict DNS resolution by service name
 networks:
-  micro-net:
+  microservice_net:
     driver: bridge

@@ -1,0 +1,36 @@
+version : "3.8"
+services :
+  spring:
+    image : openjdk:17
+    ports:
+      - 8080:8080
+    depends_on :
+    - database
+    networks :
+      batman:
+        ipv4_address : "10.0.0.2"
+
+  database :
+    image : postgres:latest
+ 
+    environment :
+      # POSTGRES_DB : spring
+      POSTGRES_USER : root
+      POSTGRES_PASSWORD : batman
+
+
+    volumes :
+     - ./postgres:/var/lib/postgresql/data
+
+    networks : 
+      batman :
+        ipv4_address : "10.0.0.21"
+
+
+
+networks:
+  batman: 
+    ipam:
+      driver: default
+      config :
+        -  subnet : "10.0.0.0/24"

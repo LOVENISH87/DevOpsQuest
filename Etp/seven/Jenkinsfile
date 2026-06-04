@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'lovenish69/myapp'
+        IMAGE_TAG =  '1.0'
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch : 'main' , url: 'https://github.com/LOVENISH87/DevOpsQuest'
+            }
+        }
+
+        stage('dependency installation') {
+            steps {
+                echo 'installing deps'
+            }
+        }
+
+        stage('build application') {
+            steps {
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+            }
+        }
+        stage('tag image') {
+            steps {
+                sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest"
+            }
+        }
+        stage('container deployment') {
+            steps {
+                sh "docker run -d -p 8090:8080 ${IMAGE_NAME}:${IMAGE_TAG}"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'success'
+        }
+        failure {
+            echo 'pipeline failed'
+        }
+    }
+}

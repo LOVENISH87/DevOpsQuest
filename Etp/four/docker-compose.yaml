@@ -1,0 +1,42 @@
+services:
+  client:
+    image : nginx:alpine
+    ports:
+      - 8082:80
+    networks:
+      - fourImages
+  api : 
+    depends_on:
+      - database
+      - cache
+    build: .
+    ports:
+      - 5000:5000
+    networks:
+      - fourImages
+  
+  cache :
+    image: redis:latest
+    networks:
+      - fourImages
+
+  database :
+    image: mysql
+    environment :
+      MYSQL_ROOT_PASSWORD : batman
+      MYSQL_DATABASE : database
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - fourImages
+  
+
+networks : 
+    fourImages :
+      ipam:
+        driver : default
+        config : 
+          - subnet : "10.0.0.0/24"
+
+volumes:
+  db_data:

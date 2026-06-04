@@ -1,11 +1,23 @@
 version: '3.8'
+
+# Implementing dependent startup sequences
 services:
-  database:
+  primary_database:
     image: postgres:15
     environment:
-      POSTGRES_PASSWORD: secret
-  backend:
+      POSTGRES_PASSWORD: secure_password
+      POSTGRES_DB: maindb
+    # Implement healthcheck for true readiness vs simply 'started'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend_server:
     image: node:18-alpine
     command: tail -f /dev/null
+    # strict dependency guarantees backend wait until postgres is physically ready
     depends_on:
-      - database
+      primary_database:
+        condition: service_healthy

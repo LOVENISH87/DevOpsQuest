@@ -1,5 +1,11 @@
 version: '3.8'
+
+# Implementing Scalability constraints
 services:
-  backend:
+  scalable_backend:
     image: node:18-alpine
     command: tail -f /dev/null
+    # Provide a port range so Docker can dynamically allocate ports when scaling
+    # Usage: docker-compose up --scale scalable_backend=3
+    ports:
+      - "3000-3005:3000"

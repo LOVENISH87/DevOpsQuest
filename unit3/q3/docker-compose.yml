@@ -1,10 +1,14 @@
 version: '3.8'
+
+# Cross-Service configuration via Environment Variables
 services:
-  backend:
+  backend_service:
     image: node:18-alpine
+    # Backend detects db connection dynamically via the DB_HOST injection
     environment:
-      - DB_HOST=mongodb
+      - DB_HOST=nosql_database
       - DB_URL=URl
     command: tail -f /dev/null
-  mongodb:
+    
+  nosql_database:
     image: mongo:latest

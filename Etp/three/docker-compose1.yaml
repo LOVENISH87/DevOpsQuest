@@ -1,0 +1,35 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    environment:
+      WORDPRESS_DB_HOST: database
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: batman
+      WORDPRESS_DB_NAME: wordpress
+    
+    depends_on:
+      - database
+    ports:
+      - "8090:80"
+    networks:
+      - batman
+
+  database:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: batman
+      MARIADB_DATABASE: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - batman
+
+networks:
+  batman:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.0.0.0/24"
+
+volumes:
+  db_data:
